@@ -26,34 +26,35 @@ namespace SharpCompress.Archives
             {
                 throw new ArgumentException("Stream should be readable and seekable");
             }
+            long position = stream.Position;
             readerOptions = readerOptions ?? new ReaderOptions();
             if (ZipArchive.IsZipFile(stream, null))
             {
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Seek(position, SeekOrigin.Begin);
                 return ZipArchive.Open(stream, readerOptions);
             }
-            stream.Seek(0, SeekOrigin.Begin);
+            stream.Seek(position, SeekOrigin.Begin);
             if (SevenZipArchive.IsSevenZipFile(stream))
             {
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Seek(position, SeekOrigin.Begin);
                 return SevenZipArchive.Open(stream, readerOptions);
             }
-            stream.Seek(0, SeekOrigin.Begin);
+            stream.Seek(position, SeekOrigin.Begin);
             if (GZipArchive.IsGZipFile(stream))
             {
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Seek(position, SeekOrigin.Begin);
                 return GZipArchive.Open(stream, readerOptions);
             }
-            stream.Seek(0, SeekOrigin.Begin);
+            stream.Seek(position, SeekOrigin.Begin);
             if (RarArchive.IsRarFile(stream, readerOptions))
             {
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Seek(position, SeekOrigin.Begin);
                 return RarArchive.Open(stream, readerOptions);
             }
-            stream.Seek(0, SeekOrigin.Begin);
+            stream.Seek(position, SeekOrigin.Begin);
             if (TarArchive.IsTarFile(stream))
             {
-                stream.Seek(0, SeekOrigin.Begin);
+                stream.Seek(position, SeekOrigin.Begin);
                 return TarArchive.Open(stream, readerOptions);
             }
             throw new InvalidOperationException("Cannot determine compressed stream type. Supported Archive Formats: Zip, GZip, Tar, Rar, 7Zip, LZip");
